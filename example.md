@@ -2,20 +2,19 @@
 layout: default
 ---
 
-This is a dev blog detailing engineering projects by Jack Comey.
+Text can be **bold**, _italic_, or ~~strikethrough~~.
 
-All work is my own unless stated otherwise.
+[Link to another page](./another-page.html).
 
-For highlights of my work, please [click here](./another-page.html).
+There should be whitespace between paragraphs.
 
-# Latest Project Updates
+There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+
+# Header 1
 
 This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
-## UAV Simulator Project Description
-
-I've been working on this for a few weeks now, and I was encouraged to keep a development blog and document my process. The best place to start, I believe, would be a description of what it is exactly that I'm doing, and how I plan to go about it.
-
+## Header 2
 
 > This is a blockquote following a header.
 >
