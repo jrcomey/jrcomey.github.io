@@ -16,6 +16,12 @@ This is a normal paragraph following a header. GitHub is a code hosting platform
 
 I've been working on this for a few weeks now, and I was encouraged to keep a development blog and document my process. The best place to start, I believe, would be a description of what it is exactly that I'm doing, and how I plan to go about it.
 
+The project itself is a comprehensive UAV simulator (**U**nmanned **A**rial **V**ehicle) designed to be used as an easy testing platform for UAV systems.
+While I'm currently developing for multicopter formats (quadcopters, hexacopters etc.), I plan on expanding the system for a much larger variety of aircraft in the future.
+
+
+
+
 
 > This is a blockquote following a header.
 >
