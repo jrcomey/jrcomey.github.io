@@ -2,9 +2,9 @@
 layout: default
 ---
 
-This is a dev blog detailing engineering projects by Jack Comey.
+This is a developer blog detailing engineering projects by Jack Comey.
 
-All work is my own unless stated otherwise.
+All work is my own, unless stated otherwise.
 
 For highlights of my work, please [click here](./another-page.html).
 
@@ -12,13 +12,46 @@ For highlights of my work, please [click here](./another-page.html).
 
 This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
 
+## Update 1: Physics simulation
+
+I'm very pleased to report that the basic physics model for the simulation is now complete. 
+
+
 ## UAV Simulator Project Description
 
-I've been working on this for a few weeks now, and I was encouraged to keep a development blog and document my process. The best place to start, I believe, would be a description of what it is exactly that I'm doing, and how I plan to go about it.
+I've been working on this for a few weeks now, and I was encouraged to keep a development blog and document my process.
+ The best place to start, I believe, would be a description of what it is exactly that I'm doing, and how I plan to go about it.
 
 The project itself is a comprehensive UAV simulator (**U**nmanned **A**rial **V**ehicle) designed to be used as an easy testing platform for UAV systems.
-While I'm currently developing for multicopter formats (quadcopters, hexacopters etc.), I plan on expanding the system for a much larger variety of aircraft in the future.
+While I'm currently developing for multicopter formats (quadcopters, hexacopters etc.), 
+I plan on expanding the system for a much larger variety of aircraft in the future.
 
+**Description of overall process here**
+
+The program itself uses a parent class containing general purpose functions and calculations for any generic UAV system. If calculations are 
+reliant on specific geometry of the UAV, then those functions are contained in that drone's object class (as a child class of the generic UAV)
+This structure allows for easy modelling of wildly different UAV types, with minor edits to the initialization of a new child class, and edits to 
+geometry-specific functions.
+#### Planned Feature List
+
+*	~~Body, Earth, and Stability transformation matrices for changing vector space~~
+*	~~Translational motor thrust modelling~~
+*	~~Torque modelling from motor thrust~~
+*	Gyroscopic procession modelling for each motor
+*	~~Sum of translational motor forces~~
+*	~~Sum of motor torques~~
+*	~~Model inertia matrix~~
+*	~~Hover Capability~~
+*	Stabilization loop for pitch
+*	Stabilization loop for roll
+*	Stabilization loop for yaw
+*	Above three function together
+*	X velocity kill control
+* 	X+Y velocity kill control
+*	Full 3D velocity kill control
+*	Stabilization into velocity kill function
+* 	Seperation of phyiscs calculations and velocity/stabilization program. (Control software loaded onto flight computer)
+*	3D pathfinding algorithim to find shortst possible route in 3D space from point A to point B, with maximum acceleration limits.
 
 
 
