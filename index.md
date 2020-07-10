@@ -13,6 +13,7 @@ For highlights of my work, please [click here](./another-page.html).
 These are my latest updates regarding my simulation project. 
 ## Update 1: Physics simulation
 _9 JUL 2020_
+
 I'm very pleased to report that the basic physics model for the simulation is now complete. As this is my first post regarding the development process,
 this may be a little feature heavy. Bear with me, here.
 
