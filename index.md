@@ -10,12 +10,38 @@ For highlights of my work, please [click here](./another-page.html).
 
 # Latest Project Updates
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
+These are my latest updates regarding my simulation project. 
 ## Update 1: Physics simulation
+_9 JUL 2020_
+I'm very pleased to report that the basic physics model for the simulation is now complete. As this is my first post regarding the development process,
+this may be a little feature heavy. Bear with me, here.
 
-I'm very pleased to report that the basic physics model for the simulation is now complete. 
+I'm using a quadcopter model as my test aircraft, but the physics model and other math are applicable to all other formats.
 
+When the aircraft is initialized, all components are defined in a local frame of reference, with its center at the UAV's centre of mass.
+All force and torque generation and addition are then done in this localized frame of reference, and then the
+combined net force and torque vectors are transformed into a global frame of reference. 
+From there, external forces on the aircraft are summed (e.g. gravity)
+and then kinematics calculations are performed for a small time interval **dt** for both translational and rotational movement. 
+
+**Show freefall picture here**
+
+A quick test with no motor input shows that the aircraft falls towards the earth at an accelerating rate, and reaches a predicted position of Z=-44.15m
+after three seconds. The next question is if thrust from the motors will stop the aircraft from falling. I wrote a placeholder control loop to increase thrust if the aircraft had negative velocity, and to decrease thrust if the velocity was positive, with the hope that it would reach a point where it would hover.
+
+**Show hover pic here**
+A successful, if not a very fast responding, demonstration of gravitational and motor forces shows that the translational force and kinematics models are functional.
+
+The rotational model presented more difficulties. I ended up using a deconstructed version of Euler's equations, with an additional function to prevent Euler angles from exceeding bounds. The testing method was similar, and one motor was fixed at maximum power, and then the simulation was run.
+
+**Show spiral pic here**
+
+Predictably, the aircraft flips over at an accelerating rate, and begins to spiral. After implementing basic feedback systems for both pitch and roll, these are the results:
+**Show rotational feedback pictures here**
+
+The implemented control system is underdamped and unstable, but is, after all, a placeholder. The next step of the project is to replace this placeholder with a PID controller.
+
+# Project Descriptions
 
 ## UAV Simulator Project Description
 
