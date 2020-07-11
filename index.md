@@ -37,7 +37,7 @@ combined net force and torque vectors are transformed into a global frame of ref
 From there, external forces on the aircraft are summed (e.g. gravity)
 and then kinematics calculations are performed for a small time interval **dt** for both translational and rotational movement. 
 
-![](https://github.com/jrcomey/jrcomey.github.io/blob/master/Pictures/VerticalFall.png)
+![](Pictures/StabilizerPlaceholder.png)
 
 A quick test with no motor input shows that the aircraft falls towards the earth at an accelerating rate, and reaches a predicted position of Z=-44.15m
 after three seconds. The next question is if thrust from the motors will stop the aircraft from falling. I wrote a placeholder control loop to increase thrust if the aircraft had negative velocity, and to decrease thrust if the velocity was positive, with the hope that it would reach a point where it would hover.
@@ -47,7 +47,7 @@ A successful, if not a very fast responding, demonstration of gravitational and 
 
 The rotational model presented more difficulties. I ended up using a deconstructed version of Euler's equations, with an additional function to prevent Euler angles from exceeding bounds. The testing method was similar, and one motor was fixed at maximum power, and then the simulation was run.
 
-![](https://github.com/jrcomey/jrcomey.github.io/blob/master/Pictures/Uncontrolled%20spin.png)
+![](./Pictures/StabilizerPlaceholder.png)
 
 Predictably, the aircraft flips over at an accelerating rate, and begins to spiral. After implementing basic feedback systems for both pitch and roll, these are the results:
 ![](https://github.com/jrcomey/jrcomey.github.io/blob/master/Pictures/StabilizerPlaceholder.png)
