@@ -48,11 +48,11 @@ A successful, if not a very fast responding, demonstration of gravitational and 
 
 The rotational model presented more difficulties. I ended up using a deconstructed version of Euler's equations, with an additional function to prevent Euler angles from exceeding bounds. The testing method was similar, and one motor was fixed at maximum power, and then the simulation was run.
 
-![](Pictures/Uncontrolled spin.png)
+![UAV in uncontrolled spin](Pictures/Uncontrolled spin.png)
 
 Predictably, the aircraft flips over at an accelerating rate, and begins to spiral. After implementing basic feedback systems for both pitch and roll, these are the results:
 
-![](Pictures/StabilizerPlaceholder.png)
+![UAV with underdamped, unstable attitude control](Pictures/StabilizerPlaceholder.png)
 
 The implemented control system is underdamped and unstable, but is, after all, a placeholder. The next step of the project is to replace this placeholder with a PID controller.
 
