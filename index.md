@@ -8,6 +8,8 @@ All work is my own, unless stated otherwise.
 
 For highlights of my work, please [click here](./another-page.html).
 
+Images to come soon!
+
 # Latest Project Updates
 
 These are my latest updates regarding my simulation project. 
