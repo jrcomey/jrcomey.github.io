@@ -14,6 +14,21 @@ Images to come soon!
 
 These are my latest updates regarding my simulation project. 
 
+## Update 3: PID Positional and Attitude control
+_12 JUL 2020_
+
+While velocity control is a good start, the type of system control that you'd want for an autonomous vehicle would be a positional control (e.g. give it an altitude, and it stays steady at that altitude). For that to happen, it was necessary to switch from a velocity based PID control to a position based PID. In practical effects, this just meant a change to the D term as a function of velocity rather than position, as well as the addition of a few feed forward terms. Below is an example of the new behaviour of the system:
+
+**Image here**
+
+Next comes attitude control. Using the same system, with slightly different constants, its possible to control pitch and roll simulataneously. PID loops for both are seperate, and signal changes to each motor are summed to the current motor signal matrix rather than setting the new signal themselves. This allows them to use the setpoint value for hovering and then modify attitude behaviour as slight differences to each motor from that baseline value. By doing so, both the altitude control and attitude correction funcitons can run simultaneously, with little effect on the other. The first attempt at this is seen below:
+
+**Image here**
+
+Note that the positional hover takes priority over attitude control, and that attitude control only has room to function after the UAV begins to stabilize at its setpoint altitude. Not only does this prevent attitude control until basic conditions have been met, but prevents the aircraft from self-righting if in an inverted position. The fix to this is to simply call the signal sanity check function at the end of the hover function, to ensure that the signal value that the attitude control functions are being summed with are not beyond the physical bounds of the signal wire itself. This allows the attitude control functions full input at all times, completely fixing the bug. The results of the new system are below.
+
+**Image here**
+
 ## Update 2: PID Velocity control
 _10 JUL 2020_
 
@@ -88,8 +103,8 @@ geometry-specific functions.
 *	Stabilization loop for yaw
 *	Above three function together
 *	X velocity kill control
-* 	X+Y velocity kill control
+*	X+Y velocity kill control
 *	Full 3D velocity kill control
 *	Stabilization into velocity kill function
-* 	Seperation of phyiscs calculations and velocity/stabilization program. (Control software loaded onto flight computer)
+*	Seperation of phyiscs calculations and velocity/stabilization program. (Control software loaded onto flight computer)
 *	3D pathfinding algorithim to find shortst possible route in 3D space from point A to point B, with maximum acceleration limits.
