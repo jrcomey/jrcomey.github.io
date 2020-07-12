@@ -8,7 +8,7 @@ All work is my own, unless stated otherwise.
 
 For highlights of my work, please [click here](./another-page.html).
 
-Images to come soon!
+Please contact me at jrcomey@ucdavis.edu for any questions.
 
 # Latest Project Updates
 
