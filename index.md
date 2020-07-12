@@ -57,8 +57,6 @@ and then kinematics calculations are performed for a small time interval **dt** 
 A quick test with no motor input shows that the aircraft falls towards the earth at an accelerating rate, and reaches a predicted position of Z=-44.15m
 after three seconds. The next question is if thrust from the motors will stop the aircraft from falling. I wrote a placeholder control loop to increase thrust if the aircraft had negative velocity, and to decrease thrust if the velocity was positive, with the hope that it would reach a point where it would hover.
 
-**Show hover pic here**
-
 A successful, if not a very fast responding, demonstration of gravitational and motor forces shows that the translational force and kinematics models are functional.
 
 The rotational model presented more difficulties. I ended up using a deconstructed version of Euler's equations, with an additional function to prevent Euler angles from exceeding bounds. The testing method was similar, and one motor was fixed at maximum power, and then the simulation was run.
