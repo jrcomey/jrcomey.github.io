@@ -14,6 +14,22 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+## Update 4: 3D Positional control and Primitive Autopilot
+_14 JUL 2020_
+
+I've been really enjoying working on this simulation project, and never thought that I would make so much progress so quickly. A little under a week ago, all this simulation was capable of was simulating a falling object. Now, it's capable of full 3D positional and attitude control.
+
+Which brings me to the subject of this update. Forces in the Z-direction are mostly dependent on motor thrust, with some influence from the attitude of the aircraft. And yes, while the aircraft _could_ be pointing in any direction, the pitch/roll stabilization functions cause it to level out. Altitude control is fairly easy, as it's simply a function of motor thrust input.
+
+**Image here**
+
+ XY positions, on the other hand, are almost entirely influenced by the _attitude_ of the aircraft, which makes influencing position on that plane a little trickier. Attitude positions in excess of +/- 0.5 pi mean that there is no lift force exerted on the aircraft, and makes it difficult to work with an already existing stabilization function. Instead of trying to override the stabilization function, I made the stabilzation function part of the solution. Attitude control is now influenced by 2 PID loops. The first is a positional PID for the translational axis, and outputs an aircraft angle. That angle is used as the setpoint for the already existing attitude control function. This allows for full 3D control of the aircraft simply by changing setpoints. While not incredibly sophisticated, working positional control into the attitude control loop allows for a primitive form of autopilot. The aircraft now has the ability to move to a entirely random point in 3D space, starting at any velocity and orientation, arrive and remain there, and only requires values for the XYZ coordinates to do so. It may not do so perfectly, but this positional movement control could be applicable for a variety of applications. In physical tests, there would need to be some kind of secondary position-fixing system, such as GPS or an optical system for a known environment to account for increasing IMU drift, but the early stages are promising to say the least.
+
+The next step is to make that basic waypoint system to navigate around generated objects. At first manually placed points, but I plan to use an existing pathfinding algorithim to generate a low resolution path around obstacles. 
+
+On a side note, simulation time is drastically increasing. I hope to begin optimizing the code, but I'd like to finish the waypoint system first. 
+
+
 ## Update 3: PID Positional and Attitude control
 _12 JUL 2020_
 
