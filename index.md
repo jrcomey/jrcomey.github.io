@@ -14,6 +14,16 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+## Update 5: Optimization
+_30 JUL 2020_
+
+It's been a while since I've posted, but with good reason. While I have very little to speak of for a new feature list, I have made vast improvements to simulation speed. The change with the largest impact was a modification to the way in which aircraft positional data was stored.
+Previously, I had been using a pandas data frame which recorded UAV properties at every time step as a new row in the frame. While this was sufficient for short time simulations (<5s), processing time grew much longer as the dataframe increased in size. After 10s of simulated time, the dataframe had reached a size of 10,000 x 22, and time per tick increased from 11ms to >150ms near the end of the simulation, exponentially increasing computation time as the time simulated increased.
+
+With that being said, I've modified the program to use a buffer instead. After the dataframe reaches a pre-determined size, the data is appended to a .csv file for storage. This change drastically reduced computation time, and average time per tick was reduced to 7.2ms. A 40s simulation previously took 53 minutes, and now only takes 13. 
+
+I've also been trying to write the control software to an existing UAV system I have in the hopes of verifying the accuracy of my simulation, but am currently unable to test the aircraft itself. I've also began work on a GUI, in the hopes of distributing a finished version of this simulator to Davis teams that may find it useful.
+
 ## Update 4: 3D Positional control and Primitive Autopilot
 _14 JUL 2020_
 
