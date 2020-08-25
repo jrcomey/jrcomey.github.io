@@ -26,6 +26,7 @@ To that end, my current goals are as follows:
 
 *	Restructure the current simulation file into a standard Python package format
 *	Change the force-summing method currently in use to a state-space model to conform to industry standard
+*	Add new analysis functions to return useful engineering data to the user
 *	Format any existing code that does not currently meet PEP8 standards, as well as add in-depth comments to allow for human readability
 *	Write documentation on all parts of the package to allow others to use it, in as clear and concise a way as possible
 
