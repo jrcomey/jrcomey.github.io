@@ -14,6 +14,21 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+## Update 6: Organization and Structure
+_24 AUG 2020_
+
+I've made numerous changes since the last update, and I admit that I haven't been making notes with the frequency as I would have liked, primarily due to personal matters.
+As it stands now, the simulation package is more or less feature complete according to my initial feature list. It simulates a quadrotor UAV, with the structure to add more formats. The UAV itself operates on multiple PID control loops, and can navigate by way of a waypoint-based autopilot. 
+
+The aim, now, is to restructure the program into a usable Python package, following the advice of Carlos Pereyra, a former TA of mine who has been kind enough to give me advice and direction on this project, and he has encouraged me to pursue publication of this little package. I hope others may find it useful, despite its niche appeal, especially if they find themselves without a testing environment like I did.
+
+To that end, my current goals are as follows:
+
+*	Restructure the current simulation file into a standard Python package format
+*	Change the force-summing method currently in use to a state-space model to conform to industry standard
+*	Format any existing code that does not currently meet PEP8 standards, as well as add in-depth comments to allow for human readability
+*	Write documentation on all parts of the package to allow others to use it, in as clear and concise a way as possible
+
 ## Update 5: Optimization
 _30 JUL 2020_
 
