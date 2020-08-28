@@ -14,6 +14,53 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+## Update 7: Cleaning House
+_28 AUG 2020_
+
+I have spent the last few days restructuring the content of the package to match industry standards. All code is now PEP8 compliant, and the package structure itself now follows standard Python package format. I have also written a readme.md file for the package, which explains what the package is for, why it was made, how to install it, and how to use. I encourage you to read it [here](https://github.com/jrcomey/Simulator). Small portions are placeholders, but will be updated shortly.
+
+I've also taken effort to increase human readability of the package. Each function now has a detailed docstring, and code is broken up into small, easy to read portions, with a comment above explaining what that block does. Variable names are self-explanatory. Here is a sample of the re-written Hover function, which uses a positional PID loop to control UAV altitude as a function of input motor signal:
+
+```python
+    def Hover(self):
+        """
+        Hover function. Uses positional PID control loop to maintain a
+        specified altitude.
+
+        Returns
+        -------
+        None.
+
+        """
+
+        # Feedforward constants. Currently unused.
+
+        setpoint_vel = 0
+        setpoint_acc = 0
+
+        # Determination of P, I, and D term values
+
+        err = self.pos_e[2] - self.setpoint_alt
+        self.int_pos += err*dt
+        der = self.vel_e[2] - setpoint_vel
+
+        # Set motor signal using PID control loop
+
+        self.signal = np.array([[1],
+                                [1],
+                                [1],
+                                [1]]) * int(P * signal_width * err
+                                            + I * signal_width * self.int_pos
+                                            + D * signal_width * der
+                                            + VFF * setpoint_vel
+                                            + AFF * setpoint_acc)
+
+        # Check that output signal does not exceed system bounds
+        self.SignalCheck()
+```
+
+The next goal on the list is to replace the force-summation method with a state space model, and add new analysis functions. I will then consider the package feature complete for my initial goals, and then write extensive documentation to allow others to easily use the package. Once the documentation is complete, I will release the package. After release, I will begin work on simulation of helicopter behaviour, but for now, my initial goal remains to release my current feature list.
+
 ## Update 6: Organization and Structure
 _24 AUG 2020_
 
