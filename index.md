@@ -3,6 +3,13 @@ layout: default
 ---
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async src="path-to-mathjax/MathJax.js?config=TeX-AMS_CHTML"></script>
+
 
 This is a developer blog detailing engineering projects by Jack Comey.
 
@@ -52,30 +59,33 @@ I'll begin with translational motion. The actual model uses 6 degrees of freedom
 Start with the basic time-variant state-space model:
 
 $$\boldsymbol{\dot{x}}(t) = \boldsymbol{A}(t)x(t) + \boldsymbol{B}(t)\vec{u}(t)$$
+
 $$\boldsymbol{y}(t) = \boldsymbol{C}(t)x(t) + \boldsymbol{D}(t)\vec{u}(t)$$
 
-\(\boldsymbol{A}\) and \(\boldsymbol{C}\) are straightfoward, and serve to model motion. \(\boldsymbol{D}\) is a matrix of zeroes, as there is no feed-forward mechanism.
+$\boldsymbol{A}$ and $\boldsymbol{C}$ are straightfoward, and serve to model motion. $\boldsymbol{D}$ is a matrix of zeroes, as there is no feed-forward mechanism.
 
 Each multicopter is controlled through the thrust of each motor. Therefore, the inputs of the system can be defined as a vector containing each motor force:
 
 $$\vec{u} = \begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
 
-The problem is that these input forces are in the body frame of reference, and motion calculations are performed in the inertial frame. The solution is to define \(\boldsymbol{B}\) so that changes in input forces correctly effect motion in the inertial frame.
+The problem is that these input forces are in the body frame of reference, and motion calculations are performed in the inertial frame. The solution is to define $\boldsymbol{B}$ so that changes in input forces correctly effect motion in the inertial frame.
 
 Beginning with Newton's second law in the inertial frame of reference, broken into its component parts:
 
 $$\begin{bmatrix}F_x\\F_y\\ F_z\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
 
-Component forces in the body frame can be translated into the inertial frame through rotation matrix \(\boldsymbol{R}\)
+Component forces in the body frame can be translated into the inertial frame through rotation matrix $\boldsymbol{R}$
 
 $$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
 
-These body component forces now need to be defined in terms of motor input forces \(\vec{u}\). These can be defined through a motor mixer, which defines the effect of each motor on the component forces:
+These body component forces now need to be defined in terms of motor input forces $\vec{u}$. These can be defined through a motor mixer, which defines the effect of each motor on the component forces:
 
 $$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = \boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}0 & 0 & 0 & 0\\0 & 0 & 0 & 0\\-1 & -1 & -1 & -1\\\end{bmatrix}\begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
 
-Given that the \(z\) axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the \(-z\) direction equal to the magnitude of its total force.
-In the event that a motor is tilted, the mixer can be changed to reflect that.
+Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the $-z$ direction equal to the magnitude of its total force.
+In the event that a motor is tilted, the mixer can be updated to reflect the effect on the component forces.
+
+
 
 ## Update 7: Cleaning House
 _28 AUG 2020_
