@@ -8,7 +8,7 @@ This is a developer blog detailing engineering projects by Jack Comey.
 
 All work is my own, unless stated otherwise.
 
-For highlights of my work, please [click here](./another-page.html).
+For highlights of my work, please [click here](https://drive.google.com/file/d/1oNmdAvaDHDy0yVp10se0VUs5U8sivDb0/view).
 
 Please contact me at jrcomey@ucdavis.edu for any questions.
 
