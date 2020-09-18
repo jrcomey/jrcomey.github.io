@@ -19,7 +19,10 @@ _12 SEP 2020_
 
 This is a bit of a large update, so bear with me. 
 
-![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
+<figure class="image">
+  <img src="Pictures/OldCode.png" alt="{{ Old Code}}">
+  <figcaption>{{ Translational and rotational vectors for old dynamics package }}</figcaption>
+</figure>
 
 I've been trying to work a state space model into the existing framework of the package, replacing the existing control algorithims and updating the whole structure to accomodate the change. I had almost finished, but the entire module had become so convuluted and difficult to understand that I might as well re-write it. It also didn't work as well, which was the icing on the cake.
 
