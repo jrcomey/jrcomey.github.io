@@ -14,9 +14,31 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+## Update 8: State-space Implementation and Explanation
+_12 SEP 2020_
+
+This is a bit of a large update, so bear with me. 
+
+![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
+
+I've been trying to work a state space model into the existing framework of the package, replacing the existing control algorithims and updating the whole structure to accomodate the change. I had almost finished, but the entire module had become so convuluted and difficult to understand that I might as well re-write it. It also didn't work as well, which was the icing on the cake.
+
+![This state vector model replaces everything in the last photo](Pictures/NewCode.png)
+
+So I re-wrote the whole package. I've completely cleaned up the structure, and the configuration is far simpler, as you can see! Previously, the package consisted of a master UAV object containing the dynamics packages, and multiple child objects with control algorithims specific to a layout (quadcopter, hexacopter, etc). There's only one UAV object, which will not only accomodate any number of motors, but any possible layout, with any possible orientation. I'll explain how that works in a second.
+
+![Compared algorithim speeds](Pictures/ComparisonGraph.png)
+
+The results of the re-write, thankfully speak for themselves. For 100 seconds of simulated time at 0.001 second intervals, the old algorithim finishes in 777.02 seconds (~13 minutes). The new state-space based package completes the same task in 4 minutes flat, and improvement of 68.9%. The majority of that time is spent recording flight data, which provides an obvious next step for optimization of the program. Eliminating the recording step in the loop achieves the same task in 48 seconds. 
+
+
+### Derivation of the Model:
+
+\\( a^2 = b^2 \\)
+
 ## Update 7: Cleaning House
 _28 AUG 2020_
-
+    
 I have spent the last few days restructuring the content of the package to match industry standards. All code is now PEP8 compliant, and the package structure itself now follows standard Python package format. I have also written a readme.md file for the package, which explains what the package is for, why it was made, how to install it, and how to use. I encourage you to read it [here](https://github.com/jrcomey/Simulator). Small portions are placeholders, but will be updated shortly.
 
 I've also taken effort to increase human readability of the package. Each function now has a detailed docstring, and code is broken up into small, easy to read portions, with a comment above explaining what that block does. Variable names are self-explanatory. Here is a sample of the re-written Hover function, which uses a positional PID loop to control UAV altitude as a function of input motor signal:
@@ -187,13 +209,13 @@ geometry-specific functions.
 *	~~Sum of motor torques~~
 *	~~Model inertia matrix~~
 *	~~Hover Capability~~
-*	Stabilization loop for pitch
-*	Stabilization loop for roll
-*	Stabilization loop for yaw
-*	Above three function together
-*	X velocity kill control
-*	X+Y velocity kill control
-*	Full 3D velocity kill control
-*	Stabilization into velocity kill function
+*	~~Stabilization loop for pitch~~
+*	~~Stabilization loop for roll~~
+*	~~Stabilization loop for yaw~~
+*	~~Above three function together~~
+*	~~X velocity kill control~~
+*	~~X+Y velocity kill control~~
+*	~~Full 3D velocity kill control~~
+*	~~Stabilization into velocity kill function~~
 *	Seperation of phyiscs calculations and velocity/stabilization program. (Control software loaded onto flight computer)
 *	3D pathfinding algorithim to find shortst possible route in 3D space from point A to point B, with maximum acceleration limits.
