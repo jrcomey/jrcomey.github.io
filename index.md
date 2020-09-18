@@ -1,6 +1,8 @@
 ---
 layout: default
 ---
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 This is a developer blog detailing engineering projects by Jack Comey.
 
@@ -19,23 +21,33 @@ _12 SEP 2020_
 
 This is a bit of a large update, so bear with me. 
 
+
+
 ![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
 *Old dynamics package: Vectors for translational and rotational motion*
 
 I've been trying to work a state space model into the existing framework of the package, replacing the existing control algorithims and updating the whole structure to accomodate the change. I had almost finished, but the entire module had become so convuluted and difficult to understand that I might as well re-write it. It also didn't work as well, which was the icing on the cake.
 
 ![This state vector model replaces everything in the last photo](Pictures/NewCode.png)
+*This state vector model replaces everything in the last photo*
+
+
+
 
 So I re-wrote the whole package. I've completely cleaned up the structure, and the configuration is far simpler, as you can see! Previously, the package consisted of a master UAV object containing the dynamics packages, and multiple child objects with control algorithims specific to a layout (quadcopter, hexacopter, etc). There's only one UAV object, which will not only accomodate any number of motors, but any possible layout, with any possible orientation. I'll explain how that works in a second.
 
 ![Compared algorithim speeds](Pictures/ComparionGraph.png)
+*Compared algorithim speeds*
+
+
+
 
 The results of the re-write, thankfully speak for themselves. For 100 seconds of simulated time at 0.001 second intervals, the old algorithim finishes in 777.02 seconds (~13 minutes). The new state-space based package completes the same task in 4 minutes flat, and improvement of 68.9%. The majority of that time is spent recording flight data, which provides an obvious next step for optimization of the program. Eliminating the recording step in the loop achieves the same task in 48 seconds. 
 
 
 ### Derivation of the Model:
 
-\\( a^2 = b^2 \\)
+
 
 ## Update 7: Cleaning House
 _28 AUG 2020_
