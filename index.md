@@ -35,6 +35,18 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my simulation project. 
 
+---
+layout: post
+title: Update 8: State-space Implementation and Explanation
+excerpt: "Why you should read my website"
+tags: [intro, beginner, jekyll, tutorial]
+comments: false
+category: blog
+---
+
+Text for your post goes here.
+
+
 ## Update 8: State-space Implementation and Explanation
 _12 SEP 2020_
 
