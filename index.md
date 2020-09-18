@@ -47,6 +47,7 @@ The results of the re-write, thankfully speak for themselves. For 100 seconds of
 
 ### Derivation of the Model:
 
+\\(vec{F} = m\vec{a})\\
 
 
 ## Update 7: Cleaning House
