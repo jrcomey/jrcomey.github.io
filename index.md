@@ -72,6 +72,8 @@ The problem is that these input forces are in the body frame of reference, and m
 
 Beginning with Newton's second law in the inertial frame of reference, broken into its component parts:
 
+$$\vec{F} = m\vec{a}$$
+
 $$\begin{bmatrix}F_x\\F_y\\ F_z\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
 
 Component forces in the body frame can be translated into the inertial frame through rotation matrix $\boldsymbol{R}$
@@ -82,8 +84,9 @@ These body component forces now need to be defined in terms of motor input force
 
 $$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = \boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}0 & 0 & 0 & 0\\0 & 0 & 0 & 0\\-1 & -1 & -1 & -1\\\end{bmatrix}\begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
 
-Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the $-z$ direction equal to the magnitude of its total force.
-In the event that a motor is tilted, the mixer can be updated to reflect the effect on the component forces.
+Each column defines the effect each motor has on component body forces as a fraction of the total magnitude of the motor force. Each row refers to the component force. Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the $-z$ direction equal to the magnitude of its total force. 
+In the event that a motor is tilted, the mixer can be updated to reflect the effect on the component forces. If the UAV has more motors (e.g. a hexacopter) then the motor mixer will have additional columns corresponding to the number of motors.
+
 
 
 
