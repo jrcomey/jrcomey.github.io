@@ -37,6 +37,10 @@ comments: false
 category: blog
 ---
 
+
+## Update 8: State-space Implementation and Explanation
+_12 SEP 2020_
+
 This is a bit of a large update, so bear with me. 
 
 {% include image.html url="/Pictures/OldCode.png" description="Old dynamics package: Vectors for translational and rotational motion" %}
@@ -104,79 +108,6 @@ The exact same process is repeated with regards to rotational motion, and define
 In effect, _any_ UAV layout can be defined in the simulation package with a single motor mixer matrix defining forces and moments on the body. In practial implementation, for a UAV with _**n**_ motors, the aircraft can be _entirely_ defined through a 12x_n_ motor mixer matrix. 
 
 The reverse effect is also true: any desired UAV motion can be defined through the transverse of the motor mixer. 
-
-## Update 8: State-space Implementation and Explanation
-_12 SEP 2020_
-
-This is a bit of a large update, so bear with me. 
-
-{% include image.html img="./Pictures/OldCode.png" title="" caption="Old dynamics package: Vectors for translational and rotational motion" %}
-
-![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
-*Old dynamics package: Vectors for translational and rotational motion*
-
-I've been trying to work a state space model into the existing framework of the package, replacing the existing control algorithims and updating the whole structure to accomodate the change. I had almost finished, but the entire module had become so convuluted and difficult to understand that I might as well re-write it. It also didn't work as well, which was the icing on the cake.
-
-![This state vector model replaces everything in the last photo](Pictures/NewCode.png)
-*This state vector model replaces everything in the last photo*
-
-
-
-
-So I re-wrote the whole package. I've completely cleaned up the structure, and the configuration is far simpler, as you can see! Previously, the package consisted of a master UAV object containing the dynamics packages, and multiple child objects with control algorithims specific to a layout (quadcopter, hexacopter, etc). There's only one UAV object, which will not only accomodate any number of motors, but any possible layout, with any possible orientation. I'll explain how that works in a second.
-
-![Compared algorithim speeds](Pictures/ComparionGraph.png)
-*Compared algorithim speeds*
-
-
-
-
-The results of the re-write, thankfully speak for themselves. For 100 seconds of simulated time at 0.001 second intervals, the old algorithim finishes in 777.02 seconds (~13 minutes). The new state-space based package completes the same task in 4 minutes flat, and improvement of 68.9%. The majority of that time is spent recording flight data, which provides an obvious next step for optimization of the program. Eliminating the recording step in the loop achieves the same task in 48 seconds. 
-
-
-### Derivation of the Model:
-
-I'll begin with translational motion. The actual model uses 6 degrees of freedom, but the concept is easier to explain with 3x3 matricies instead of 12x12. The derivation is performed with a symmetrical quadcopter, but the model is easily expandable for any number of motors, in any orientation. 
-
-Start with the basic time-variant state-space model:
-
-$$\boldsymbol{\dot{x}}(t) = \boldsymbol{A}(t)x(t) + \boldsymbol{B}(t)\vec{u}(t)$$
-
-$$\boldsymbol{y}(t) = \boldsymbol{C}(t)x(t) + \boldsymbol{D}(t)\vec{u}(t)$$
-
-$\boldsymbol{A}$ and $\boldsymbol{C}$ are straightfoward, and serve to model motion. $\boldsymbol{D}$ is a matrix of zeroes, as there is no feed-forward mechanism.
-
-Each multicopter is controlled through the thrust of each motor. Therefore, the inputs of the system can be defined as a vector containing each motor force:
-
-$$\vec{u} = \begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
-
-The problem is that these input forces are in the body frame of reference, and motion calculations are performed in the inertial frame. The solution is to define $\boldsymbol{B}$ so that changes in input forces correctly effect motion in the inertial frame.
-
-Beginning with Newton's second law in the inertial frame of reference, broken into its component parts:
-
-$$\vec{F} = m\vec{a}$$
-
-$$\begin{bmatrix}F_x\\F_y\\ F_z\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
-
-Component forces in the body frame can be translated into the inertial frame through rotation matrix $\boldsymbol{R}$
-
-$$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
-
-These body component forces now need to be defined in terms of motor input forces $\vec{u}$. These can be defined through a motor mixer, which defines the effect of each motor on the component forces:
-
-$$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = \boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}0 & 0 & 0 & 0\\0 & 0 & 0 & 0\\-1 & -1 & -1 & -1\\\end{bmatrix}\begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
-
-Each column defines the effect each motor has on component body forces as a fraction of the total magnitude of the motor force. Each row refers to the component force. Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the \-z\ direction equal to the magnitude of its total force. 
-In the event that a motor is tilted, the mixer can be updated to reflect the effect on the component forces. If the UAV has more motors (e.g. a hexacopter) then the motor mixer will have additional columns corresponding to the number of motors.
-
-The exact same process is repeated with regards to rotational motion, and defines the UAV through local moment forces.
-
-In effect, _any_ UAV layout can be defined in the simulation package with a single motor mixer matrix defining forces and moments on the body. In practial implementation, for a UAV with _**n**_ motors, the aircraft can be _entirely_ defined through a 12x_n_ motor mixer matrix. 
-
-The reverse effect is also true: any desired UAV motion can be defined through the transverse of the motor mixer. 
-
-### Model Implementation:
-
 
 
 
