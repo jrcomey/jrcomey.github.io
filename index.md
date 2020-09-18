@@ -47,7 +47,9 @@ The results of the re-write, thankfully speak for themselves. For 100 seconds of
 
 ### Derivation of the Model:
 
-$$vec{F} = m\vec{a}$$
+$$\vec{F} = m\vec{a}$$
+
+$$\begin{bmatrix}F_x\\F_y\\ F_z\\\end{bmatrix} = m\begin{bmatrix}a_x\\a_y\\a_z\\\end{bmatrix}$$
 
 
 ## Update 7: Cleaning House
