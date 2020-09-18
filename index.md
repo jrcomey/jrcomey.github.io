@@ -11,6 +11,20 @@ MathJax.Hub.Config({
 <script type="text/javascript" async src="path-to-mathjax/MathJax.js?config=TeX-AMS_CHTML"></script>
 
 
+<div class="image-wrapper" >
+  {% if include.url %}
+  <a href="{{ include.url }}" title="{{ include.title }}" target="_blank">
+  {% endif %}
+      <img src="{{ site.url }}/{{ include.img }}" alt="{{ include.title }}"/>
+  {% if include.url %}
+  </a>
+  {% endif %}
+  {% if include.caption %}
+      <p class="image-caption">{{ include.caption }}</p>
+  {% endif %}
+</div>
+
+
 This is a developer blog detailing engineering projects by Jack Comey.
 
 All work is my own, unless stated otherwise.
@@ -28,7 +42,7 @@ _12 SEP 2020_
 
 This is a bit of a large update, so bear with me. 
 
-
+{% include image.html img="Pictures/OldCode.png" title="" caption="Old dynamics package: Vectors for translational and rotational motion" %}
 
 ![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
 *Old dynamics package: Vectors for translational and rotational motion*
@@ -84,8 +98,16 @@ These body component forces now need to be defined in terms of motor input force
 
 $$\boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}{F_x}_b\\{F_y}_b\\{F_z}_b\\\end{bmatrix} = \boldsymbol{R}(\psi, \theta, \phi)\begin{bmatrix}0 & 0 & 0 & 0\\0 & 0 & 0 & 0\\-1 & -1 & -1 & -1\\\end{bmatrix}\begin{bmatrix}F_0\\F_1\\F_2\\F_3\\\end{bmatrix}$$
 
-Each column defines the effect each motor has on component body forces as a fraction of the total magnitude of the motor force. Each row refers to the component force. Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the $-z$ direction equal to the magnitude of its total force. 
+Each column defines the effect each motor has on component body forces as a fraction of the total magnitude of the motor force. Each row refers to the component force. Given that the $z$ axis in the body frame points normal to the underside of the aircraft, and the motors are fixed upright on a quadcopter, each motor produces force in the \-z\ direction equal to the magnitude of its total force. 
 In the event that a motor is tilted, the mixer can be updated to reflect the effect on the component forces. If the UAV has more motors (e.g. a hexacopter) then the motor mixer will have additional columns corresponding to the number of motors.
+
+The exact same process is repeated with regards to rotational motion, and defines the UAV through local moment forces.
+
+In effect, _any_ UAV layout can be defined in the simulation package with a single motor mixer matrix defining forces and moments on the body. In practial implementation, for a UAV with _**n**_ motors, the aircraft can be _entirely_ defined through a 12x_n_ motor mixer matrix. 
+
+The reverse effect is also true: any desired UAV motion can be defined through the transverse of the motor mixer. 
+
+### Model Implementation:
 
 
 
