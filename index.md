@@ -82,7 +82,7 @@ In the event that a motor is tilted, the mixer can be updated to reflect the eff
 
 The exact same process is repeated with regards to rotational motion, and defines the UAV through local moment forces.
 
-In effect, _any_ UAV layout can be defined in the simulation package with a single motor mixer matrix defining forces and moments on the body. In practial implementation, for a UAV with **n** motors, the aircraft can be _entirely_ defined through a 12x_n_ motor mixer matrix. 
+In effect, _any_ UAV layout can be defined in the simulation package with a single motor mixer matrix defining forces and moments on the body. In practial implementation, for a UAV with **n** motors, the aircraft can be _entirely_ defined through a 12 by _n_ motor mixer matrix. 
 
 The reverse effect is also true: any desired UAV motion can be defined through the transverse of the motor mixer. 
 
