@@ -9,8 +9,6 @@ MathJax.Hub.Config({
 });
 </script>
 <script type="text/javascript" async src="path-to-mathjax/MathJax.js?config=TeX-AMS_CHTML"></script>
-
-
 <div class="image-wrapper" >
   {% if include.url %}
   <a href="{{ include.url }}" title="{{ include.title }}" target="_blank">
@@ -42,7 +40,7 @@ _12 SEP 2020_
 
 This is a bit of a large update, so bear with me. 
 
-{% include image.html img="Pictures/OldCode.png" title="" caption="Old dynamics package: Vectors for translational and rotational motion" %}
+{% include image.html img="./Pictures/OldCode.png" title="" caption="Old dynamics package: Vectors for translational and rotational motion" %}
 
 ![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
 *Old dynamics package: Vectors for translational and rotational motion*
