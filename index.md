@@ -44,7 +44,6 @@ _12 SEP 2020_
 This is a bit of a large update, so bear with me. 
 
 {% include image.html url="/Pictures/OldCode.png" description="Old dynamics package: Vectors for translational and rotational motion" %}
-{% include image.html img="./Pictures/OldCode.png" title="" caption="Old dynamics package: Vectors for translational and rotational motion" %}
 
 ![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
 *Old dynamics package: Vectors for translational and rotational motion*
