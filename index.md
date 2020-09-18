@@ -27,7 +27,7 @@ I've been trying to work a state space model into the existing framework of the 
 
 So I re-wrote the whole package. I've completely cleaned up the structure, and the configuration is far simpler, as you can see! Previously, the package consisted of a master UAV object containing the dynamics packages, and multiple child objects with control algorithims specific to a layout (quadcopter, hexacopter, etc). There's only one UAV object, which will not only accomodate any number of motors, but any possible layout, with any possible orientation. I'll explain how that works in a second.
 
-![Compared algorithim speeds](Pictures/ComparisonGraph.png)
+![Compared algorithim speeds](Pictures/ComparionGraph.png)
 
 The results of the re-write, thankfully speak for themselves. For 100 seconds of simulated time at 0.001 second intervals, the old algorithim finishes in 777.02 seconds (~13 minutes). The new state-space based package completes the same task in 4 minutes flat, and improvement of 68.9%. The majority of that time is spent recording flight data, which provides an obvious next step for optimization of the program. Eliminating the recording step in the loop achieves the same task in 48 seconds. 
 
