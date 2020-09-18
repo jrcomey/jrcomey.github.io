@@ -26,16 +26,7 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 # Latest Project Updates
 
-These are my latest updates regarding my simulation project. 
-
----
-layout: post
-title: Update 8: State-space Implementation and Explanation
-excerpt: "Why you should read my website"
-tags: [intro, beginner, jekyll, tutorial]
-comments: false
-category: blog
----
+These are my latest updates regarding my UAV simulation project. 
 
 
 ## Update 8: State-space Implementation and Explanation
@@ -45,24 +36,14 @@ This is a bit of a large update, so bear with me.
 
 {% include image.html url="/Pictures/OldCode.png" description="Old dynamics package: Vectors for translational and rotational motion" %}
 
-![Old dynamics package: Vectors for translational and rotational motion](Pictures/OldCode.png)
-*Old dynamics package: Vectors for translational and rotational motion*
 
 I've been trying to work a state space model into the existing framework of the package, replacing the existing control algorithims and updating the whole structure to accomodate the change. I had almost finished, but the entire module had become so convuluted and difficult to understand that I might as well re-write it. It also didn't work as well, which was the icing on the cake.
 
-![This state vector model replaces everything in the last photo](Pictures/NewCode.png)
-*This state vector model replaces everything in the last photo*
-
-
-
+{% include image.html url="/Pictures/NewCode.png" description="This state vector model replaces everything in the last photo" %}
 
 So I re-wrote the whole package. I've completely cleaned up the structure, and the configuration is far simpler, as you can see! Previously, the package consisted of a master UAV object containing the dynamics packages, and multiple child objects with control algorithims specific to a layout (quadcopter, hexacopter, etc). There's only one UAV object, which will not only accomodate any number of motors, but any possible layout, with any possible orientation. I'll explain how that works in a second.
 
-![Compared algorithim speeds](Pictures/ComparionGraph.png)
-*Compared algorithim speeds*
-
-
-
+{% include image.html url="/Pictures/ComparionGraph.png" description="Compared algorithim speeds" %}
 
 The results of the re-write, thankfully speak for themselves. For 100 seconds of simulated time at 0.001 second intervals, the old algorithim finishes in 777.02 seconds (~13 minutes). The new state-space based package completes the same task in 4 minutes flat, and improvement of 68.9%. The majority of that time is spent recording flight data, which provides an obvious next step for optimization of the program. Eliminating the recording step in the loop achieves the same task in 48 seconds. 
 
@@ -177,7 +158,7 @@ To that end, my current goals are as follows:
 _30 JUL 2020_
 
 It's been a while since I've posted, but with good reason. While I have very little to speak of for a new feature list, I have made vast improvements to simulation speed. The change with the largest impact was a modification to the way in which aircraft positional data was stored.
-Previously, I had been using a pandas data frame which recorded UAV properties at every time step as a new row in the frame. While this was sufficient for short time simulations (<5s), processing time grew much longer as the dataframe increased in size. After 10s of simulated time, the dataframe had reached a size of 10,000 x 22, and time per tick increased from 11ms to >150ms near the end of the simulation, exponentially increasing computation time as the time simulated increased.
+Previously, I had been using a pandas data frame which recorded UAV properties at every time step as a new row in the frame. While this was sufficient for short time simulations (less than 5s), processing time grew much longer as the dataframe increased in size. After 10s of simulated time, the dataframe had reached a size of 10,000 x 22, and time per tick increased from 11ms to more than 150ms near the end of the simulation, exponentially increasing computation time as the time simulated increased.
 
 With that being said, I've modified the program to use a buffer instead. After the dataframe reaches a pre-determined size, the data is appended to a .csv file for storage. This change drastically reduced computation time, and average time per tick was reduced to 7.2ms. A 40s simulation previously took 53 minutes, and now only takes 7. 
 
@@ -189,8 +170,6 @@ _14 JUL 2020_
 I've been really enjoying working on this simulation project, and never thought that I would make so much progress so quickly. A little under a week ago, all this simulation was capable of was simulating a falling object. Now, it's capable of full 3D positional and attitude control.
 
 Which brings me to the subject of this update. Forces in the Z-direction are mostly dependent on motor thrust, with some influence from the attitude of the aircraft. And yes, while the aircraft _could_ be pointing in any direction, the pitch/roll stabilization functions cause it to level out. Altitude control is fairly easy, as it's simply a function of motor thrust input.
-
-**Image here**
 
  XY positions, on the other hand, are almost entirely influenced by the _attitude_ of the aircraft, which makes influencing position on that plane a little trickier. Attitude positions in excess of +/- 0.5 pi mean that there is no lift force exerted on the aircraft, and makes it difficult to work with an already existing stabilization function. Instead of trying to override the stabilization function, I made the stabilzation function part of the solution. Attitude control is now influenced by 2 PID loops. The first is a positional PID for the translational axis, and outputs an aircraft angle. That angle is used as the setpoint for the already existing attitude control function. This allows for full 3D control of the aircraft simply by changing setpoints. While not incredibly sophisticated, working positional control into the attitude control loop allows for a primitive form of autopilot. The aircraft now has the ability to move to a entirely random point in 3D space, starting at any velocity and orientation, arrive and remain there, and only requires values for the XYZ coordinates to do so. It may not do so perfectly, but this positional movement control could be applicable for a variety of applications. In physical tests, there would need to be some kind of secondary position-fixing system, such as GPS or an optical system for a known environment to account for increasing IMU drift, but the early stages are promising to say the least.
 
@@ -204,17 +183,23 @@ _12 JUL 2020_
 
 While velocity control is a good start, the type of system control that you'd want for an autonomous vehicle would be a positional control (e.g. give it an altitude, and it stays steady at that altitude). For that to happen, it was necessary to switch from a velocity based PID control to a position based PID. In practical effects, this just meant a change to the D term as a function of velocity rather than position, as well as the addition of a few feed forward terms. Below is an example of the new behaviour of the system:
 
-![Positional Hover](Pictures/Success.png)
+
+{% include image.html url="/Pictures/Success.png" description="Positional Hover" %}
 
 Next comes attitude control. Using the same system, with slightly different constants, its possible to control pitch and roll simulataneously. PID loops for both are seperate, and signal changes to each motor are summed to the current motor signal matrix rather than setting the new signal themselves. This allows them to use the setpoint value for hovering and then modify attitude behaviour as slight differences to each motor from that baseline value. By doing so, both the altitude control and attitude correction funcitons can run simultaneously, with little effect on the other. The first attempt at this is seen below:
 
-![Attitude Control](Pictures/HoverWOSignalcheck.png)
-![Positional Control](Pictures/HoverWOsignalcheckPositional.png)
+
+{% include image.html url="/Pictures/HoverWOSignalcheck.png" description="Attitude Control" %}
+
+{% include image.html url="/Pictures/HoverWOsignalcheckPositional.png" description="Positional Control" %}
 
 Note that the positional hover takes priority over attitude control, and that attitude control only has room to function after the UAV begins to stabilize at its setpoint altitude. Not only does this prevent attitude control until basic conditions have been met, but prevents the aircraft from self-righting if in an inverted position. The fix to this is to simply call the signal sanity check function at the end of the hover function, to ensure that the signal value that the attitude control functions are being summed with are not beyond the physical bounds of the signal wire itself. This allows the attitude control functions full input at all times, completely fixing the bug. The results of the new system are below.
 
-![Attitude Control Signal Check](Pictures/Hoverwithsignalcheckeuler.png)
-![Positional Control Signal Check](Pictures/Hoverwithsignalcheckpositional.png)
+{% include image.html url="/Pictures/Hoverwithsignalcheckeuler.png" description="Attitude Control Signal Check" %}
+
+{% include image.html url="/Pictures/Hoverwithsignalcheckpositional.png" description="Positional Control Signal Check" %}
+
+
 
 ## Update 2: PID Velocity control
 _10 JUL 2020_
@@ -239,7 +224,7 @@ combined net force and torque vectors are transformed into a global frame of ref
 From there, external forces on the aircraft are summed (e.g. gravity)
 and then kinematics calculations are performed for a small time interval **dt** for both translational and rotational movement. 
 
-![UAV in freefall](Pictures/VerticalFall.png)
+{% include image.html url="/Pictures/VerticalFall.png" description="UAV in freefall" %}
 
 A quick test with no motor input shows that the aircraft falls towards the earth at an accelerating rate, and reaches a predicted position of Z=-44.15m
 after three seconds. The next question is if thrust from the motors will stop the aircraft from falling. I wrote a placeholder control loop to increase thrust if the aircraft had negative velocity, and to decrease thrust if the velocity was positive, with the hope that it would reach a point where it would hover.
@@ -248,11 +233,11 @@ A successful, if not a very fast responding, demonstration of gravitational and 
 
 The rotational model presented more difficulties. I ended up using a deconstructed version of Euler's equations, with an additional function to prevent Euler angles from exceeding bounds. The testing method was similar, and one motor was fixed at maximum power, and then the simulation was run.
 
-![UAV in uncontrolled spin](Pictures/Uncontrolled spin.png)
+{% include image.html url="/Pictures/Uncontrolled spin.png" description="UAV in uncontrolled spin" %}
 
 Predictably, the aircraft flips over at an accelerating rate, and begins to spiral. After implementing basic feedback systems for both pitch and roll, these are the results:
 
-![UAV with underdamped, unstable attitude control](Pictures/StabilizerPlaceholder.png)
+{% include image.html url="/Pictures/StabilizerPlaceholder.png" description="UAV with underdamped, unstable attitude control" %}
 
 The implemented control system is underdamped and unstable, but is, after all, a placeholder. The next step of the project is to replace this placeholder with a PID controller.
 
