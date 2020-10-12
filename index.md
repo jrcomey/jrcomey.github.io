@@ -28,6 +28,11 @@ Please contact me at jrcomey@ucdavis.edu for any questions.
 
 These are my latest updates regarding my UAV simulation project. 
 
+## Update 9: Pre-release Version
+_1 OCT 2020_
+
+After a significant re-write into a state-space format, the package is ready for distribution. I've written a report detailing the derivation of the model, and the usage of the package, into a report [which can be found here.](https://drive.google.com/file/d/1EIxjnbOIqtfoXwX7spQIT_mZe2SyvFg6/view?usp=sharing) There are plenty of features that I would like to add, but the basic functionality of the package, which is to provide a dynamic model for a generic UAV, is complete.
+
 
 ## Update 8: State-space Implementation and Explanation
 _12 SEP 2020_
